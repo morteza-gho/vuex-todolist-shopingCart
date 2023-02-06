@@ -23,6 +23,10 @@ const store = createStore({
       state.tasks = tasks;
     },
 
+    addTask(state, newTask) {
+      state.tasks.unshift(newTask);
+    },
+
     updateTask(state, updtedTask) {
       const taskIndex = state.tasks.findIndex(x => x.id === updtedTask.id);
       state.tasks[taskIndex] = updtedTask;
@@ -47,11 +51,22 @@ const store = createStore({
       }
     },
 
+    async addTask({ commit }, dataModel) {
+      try {
+        const { status, data } = await axios.post(`${BASE_URL}/tasks`, dataModel);
+        if (status === 201) {
+          commit('addTask', data);
+        }
+      } catch (err) {
+        $toast.error(err.message);
+      }
+    },
+
     async updateTask({ commit }, task) {
       try {
         const { status, data } = await axios.put(`${BASE_URL}/tasks/${task.id}`, task);
         if (status === 200) {
-          commit('updateTask', task)
+          commit('updateTask', data)
         }
       } catch (err) {
         $toast.error(err.message);
