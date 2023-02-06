@@ -24,27 +24,7 @@
         </div>
       </form>
 
-      <div v-for="task in tasks" class="task-item" :key="task.id">
-
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" :id="task.id" :checked="task.completed"
-            @change="changeTaskStatus(task)">
-          <label class="form-check-label" :for="task.id">
-            <del class="title" v-if="task.completed">{{ task.title }}</del>
-            <span class="title" v-else>{{ task.title }}</span>
-          </label>
-        </div>
-
-        <div class="btn-group btn-group-sm">
-          <button type="button" class="btn btn-outline-secondary" @click="editTask(task)">
-            <i class="bi bi-pencil"></i>
-          </button>
-          <button type="button" class="btn btn-outline-danger" @click="deleteTask(task.id)">
-            <i class="bi bi-trash"></i>
-          </button>
-        </div>
-
-      </div>
+      <task-item v-for="task in tasks" :task="task" @edit-task="onEditTask"></task-item>
 
     </div>
 
@@ -52,9 +32,10 @@
 
 </template>
 <script setup>
-import { ref, reactive, computed, onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 import Loading from '../Global/Loading.vue';
+import TaskItem from "./TaskItem.vue"
 
 const store = useStore();
 const tasks = computed(() => store.getters.allTasks);
@@ -70,7 +51,7 @@ const fetchTasks = async () => {
   isLoading.value = false;
 };
 
-const editTask = (task) => {
+const onEditTask = (task) => {
   editingTask.value = task;
   newTask.value = task.title;
 }
@@ -109,17 +90,6 @@ const submitForm = async () => {
   }
 }
 
-const changeTaskStatus = async (task) => {
-  task.completed = !task.completed;
-  await store.dispatch('updateTask', task);
-};
-
-const deleteTask = async (id) => {
-  if (window.confirm('Are you sure to delete this task')) {
-    await store.dispatch('deleteTask', id);
-  }
-}
-
 onMounted(() => {
   fetchTasks();
 });
@@ -137,6 +107,10 @@ onMounted(() => {
   padding: 10px 15px;
   border-radius: 5px;
   cursor: pointer;
+  border-left: 5px solid transparent;
+}
+.task-item.done {
+  border-left-color: lightgreen;
 }
 
 .task-item:hover {
