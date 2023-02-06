@@ -22,11 +22,16 @@ const store = createStore({
     setTasks(state, tasks) {
       state.tasks = tasks;
     },
+
     updateTask(state, updtedTask) {
       const taskIndex = state.tasks.findIndex(x => x.id === updtedTask.id);
-      tasks[taskIndex] = updtedTask;
-    }
+      state.tasks[taskIndex] = updtedTask;
+    },
 
+    deleteTask(state, taskId) {
+      const taskIndex = state.tasks.findIndex(x => x.id === taskId);
+      state.tasks.splice(taskIndex, 1);
+    },
   },
 
   actions: {
@@ -42,7 +47,7 @@ const store = createStore({
       }
     },
 
-    async updatetask({ commit }, task) {
+    async updateTask({ commit }, task) {
       try {
         const { status, data } = await axios.put(`${BASE_URL}/tasks/${task.id}`, task);
         if (status === 200) {
@@ -51,7 +56,19 @@ const store = createStore({
       } catch (err) {
         $toast.error(err.message);
       }
-    }
+    },
+
+    async deleteTask({ commit }, taskId) {
+      try {
+        const { status, data } = await axios.delete(`${BASE_URL}/tasks/${taskId}`);
+        if (status === 200) {
+          commit('deleteTask', taskId)
+        }
+      } catch (err) {
+        $toast.error(err.message);
+      }
+    },
+
   }
 
 });

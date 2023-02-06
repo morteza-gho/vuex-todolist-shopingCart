@@ -19,7 +19,7 @@
           <button type="button" class="btn btn-outline-secondary">
             <i class="bi bi-pencil"></i>
           </button>
-          <button type="button" class="btn btn-outline-danger">
+          <button type="button" class="btn btn-outline-danger" @click="deleteTask(task.id)">
             <i class="bi bi-trash"></i>
           </button>
         </div>
@@ -47,8 +47,14 @@ const fetchTasks = async () => {
 
 const changeTaskStatus = async (task) => {
   task.completed = !task.completed;
-  await store.dispatch('updatetask', task);
+  await store.dispatch('updateTask', task);
 };
+
+const deleteTask = async (id) => {
+  if (window.confirm('Are you sure to delete this task')) {
+    await store.dispatch('deleteTask', id);
+  }
+}
 
 onMounted(() => {
   fetchTasks();
