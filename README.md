@@ -1,4 +1,4 @@
-# test-vue
+# Use vuex to manage TodoList and ShopingCart
 
 This template should help get you started developing with Vue 3 in Vite.
 
@@ -13,7 +13,10 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 ## Project Setup
 
 ```sh
-npm install
+1. Go to server directory with `cd server`
+2. Install packages with `npm install`
+3. Start local server with `npm start`
+4. In a new CMD, install project packages with `npm install`
 ```
 
 ### Compile and Hot-Reload for Development
