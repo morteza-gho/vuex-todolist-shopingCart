@@ -41,13 +41,13 @@ const editTask = (task) => {
 
 const deleteTask = async (id) => {
   if (window.confirm('Are you sure to delete this task')) {
-    await store.dispatch('deleteTask', id);
+    await store.dispatch('tasks/deleteTask', id);
   }
 }
 
 const changeTaskStatus = async (task) => {
   task.completed = !task.completed;
-  await store.dispatch('updateTask', task);
+  await store.dispatch('tasks/updateTask', task);
 };
 
 </script>

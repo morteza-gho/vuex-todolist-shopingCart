@@ -38,7 +38,7 @@ import Loading from '../Global/Loading.vue';
 import TaskItem from "./TaskItem.vue"
 
 const store = useStore();
-const tasks = computed(() => store.getters.allTasks);
+const tasks = computed(() => store.getters['tasks/allTasks']);
 const isLoading = ref(false);
 const miniLoading = ref(false);
 const hasError = ref(false);
@@ -47,7 +47,7 @@ const newTask = ref('');
 
 const fetchTasks = async () => {
   isLoading.value = true;
-  await store.dispatch('fetchTasks');
+  await store.dispatch('tasks/fetchTasks');
   isLoading.value = false;
 };
 
@@ -69,7 +69,7 @@ const submitForm = async () => {
 
     if (editingTask.value) {
       // edit mode
-      await store.dispatch('updateTask', {
+      await store.dispatch('tasks/updateTask', {
         id: editingTask.value.id,
         userId: 1,
         title: newTask.value,
@@ -78,7 +78,7 @@ const submitForm = async () => {
       editingTask.value = null;
     } else {
       // add mode
-      await store.dispatch('addTask', {
+      await store.dispatch('tasks/addTask', {
         userId: 1,
         title: newTask.value,
         completed: false
