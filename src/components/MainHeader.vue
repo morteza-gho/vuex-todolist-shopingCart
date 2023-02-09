@@ -21,10 +21,12 @@
             </div>
 
             <div class="position-relative">
-               <b class="bi bi-cart text-white fs-4"></b>
-               <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger mt-2">{{
-                  cartCount
-               }}</span>
+               <router-link :to="{name: 'cart'}">
+                  <b class="bi bi-cart text-white fs-4"></b>
+                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger mt-2">
+                     {{ cartCount }}
+                  </span>
+               </router-link>
             </div>
 
          </div>

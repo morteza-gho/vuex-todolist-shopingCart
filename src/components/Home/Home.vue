@@ -1,12 +1,8 @@
 <template>
-   <h1>A Todo List With Vuex</h1>
+   <h1>A Todo List And Shopping Cart With Vuex</h1>
 </template>
 
-<script>
-   export default {
-      name: "Home"
-   }
-</script>
+<script setup></script>
 
 <style scoped>
 

@@ -18,6 +18,13 @@ const cart = {
     },
     cartCount(state) {
       return state.cartItems.length
+    },
+    calcTotalPrice(state) {
+      let total = 0;
+      state.cartItems.forEach((item) => {
+        total += item.value * item.price
+      });
+      return total
     }
   },
 
