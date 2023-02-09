@@ -44,7 +44,7 @@
       "description": "the visual form of a document or a typeface without relying on meaningful content.",
       "image": "https://dkstatics-public.digikala.com/digikala-products/5b8c3c82ad9ddb31dd3c898d69b96a36259b0d6d_1671019556.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/quality,q_90",
       "price": 1590000,
-      "value": 2
+      "value": 3
     },
     {
       "id": 3,
@@ -53,14 +53,6 @@
       "image": "https://dkstatics-public.digikala.com/digikala-products/55c512f9e1a70a0afbdb4533913e6c1f4dc6bd58_1661582400.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/quality,q_90",
       "price": 1250000,
       "value": 2
-    },
-    {
-      "id": 4,
-      "title": "Aimsfit Smartwatch Bip 3 Pro",
-      "description": "Lorem ipsum may be used as a placeholder before final copy is available",
-      "image": "https://dkstatics-public.digikala.com/digikala-products/71ccb2da99fc78bf7f005a307b16034d9966bd31_1659365296.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/quality,q_90",
-      "price": 1910000,
-      "value": 1
     }
   ],
   "tasks": [

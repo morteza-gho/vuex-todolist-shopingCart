@@ -26,9 +26,13 @@
           <td class="text-center">{{ formatPrice(item.price) }}</td>
           <td class="text-center">
             <div class="btn-group btn-group-sm">
-              <button type="button" class="btn btn-outline-danger" title="Increase"
-                :disabled="miniLoading || item.value === 1" @click="changeCount('dec', item)">
+              <button type="button" class="btn btn-outline-danger" title="Increase" v-if="item.value > 1"
+                :disabled="miniLoading" @click="changeCount('dec', item)">
                 <i class="bi bi-dash-lg"></i>
+              </button>
+              <button type="button" class="btn btn-outline-danger" title="Increase" v-if="item.value === 1"
+                :disabled="miniLoading" @click="deleteItem(item.id)">
+                <i class="bi bi-trash"></i>
               </button>
               <button class="btn btn-outline-secondary text-black px-3" disabled>
                 {{ item.value }}
@@ -83,6 +87,14 @@ const changeCount = async (type, item) => {
   miniLoading.value = true;
   await store.dispatch('cart/updateCartItem', item);
   miniLoading.value = false;
+};
+
+const deleteItem = async (itemId) => {
+  if (window.confirm('Are You Sure To Delete This Product?')) {
+    miniLoading.value = true;
+    await store.dispatch('cart/deleteCartItem', itemId);
+    miniLoading.value = false;
+  }
 };
 
 </script>

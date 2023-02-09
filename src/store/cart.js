@@ -43,7 +43,7 @@ const cart = {
       state.cartItems.unshift(mewItem);
     },
 
-    deleteFromCart(state, itemId) {
+    deleteCartItem(state, itemId) {
       const index = state.cartItems.findIndex(x => x.id === itemId);
       state.cartItems.splice(index, 1);
     },
@@ -100,6 +100,17 @@ const cart = {
         toast.error(err.message);
       }
     }, // updateCartItem
+
+    async deleteCartItem({ commit }, itemId) {
+      try {
+        const { status, data } = await axios.delete(`${BASE_URL}/cart_items/${itemId}`);
+        if (status === 200) {
+          commit('deleteCartItem', itemId)
+        }
+      } catch (err) {
+        toast.error(err.message);
+      }
+    },
 
   }
 
