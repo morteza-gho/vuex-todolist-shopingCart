@@ -3,7 +3,7 @@
   <div class="task-item" :class="task.completed ? 'done' : ''">
 
     <div class="form-check">
-      <input class="form-check-input" type="checkbox" :id="props.task.id" :checked="task.completed"
+      <input class="form-check-input" type="checkbox" :id="task.id" :checked="task.completed"
         @change="changeTaskStatus(task)">
       <label class="form-check-label" :for="task.id">
         <del class="title" v-if="task.completed">{{ task.title }}</del>

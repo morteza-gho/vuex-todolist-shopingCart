@@ -9,7 +9,7 @@
       <form class="mb-3" @submit.prevent="submitForm">
         <div class="row g-3">
           <div class="col-9 position-relative">
-            <input type="text" class="form-control form-control-lg" placeholder="Enter task title..." v-model="newTask">
+            <input type="text" class="form-control form-control-lg" placeholder="Enter task title..." v-model="newTask" ref="newTaskRef">
             <span class="bi bi-x cancel-edit" v-if="editingTask" @click="cancelEdit"></span>
           </div>
           <div class="col-3">
@@ -44,6 +44,7 @@ const miniLoading = ref(false);
 const hasError = ref(false);
 const editingTask = ref();
 const newTask = ref('');
+const newTaskRef = ref(null);
 
 const fetchTasks = async () => {
   isLoading.value = true;
@@ -54,6 +55,7 @@ const fetchTasks = async () => {
 const onEditTask = (task) => {
   editingTask.value = task;
   newTask.value = task.title;
+  newTaskRef.value.focus();
 }
 const cancelEdit = () => {
   editingTask.value = null;
