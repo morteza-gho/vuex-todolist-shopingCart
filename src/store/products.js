@@ -14,7 +14,8 @@ const products = {
   getters: {
     allProducts(state) {
       return state.products
-    }
+    },
+    
   },
 
   mutations: {

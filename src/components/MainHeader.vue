@@ -34,12 +34,11 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
 const cartCount = computed(() => store.getters['cart/cartCount']);
-console.log(cartCount)
 
 const fetchCartItems = () => {
    store.dispatch('cart/fetchCartItems');

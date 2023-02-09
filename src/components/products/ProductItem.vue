@@ -1,7 +1,9 @@
 <template>
 
   <div class="card">
-    <img :src="product.image" class="card-img-top" :alt="product.title">
+    <router-link :to="{ name: 'product', params: { id: product.id } }">
+      <img :src="product.image" class="card-img-top" :alt="product.title">
+    </router-link>
     <div class="card-body">
       <h5 class="card-title">{{ product.title }}</h5>
       <p class="card-text">{{ product.description }}</p>
