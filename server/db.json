@@ -29,6 +29,32 @@
       "price": 1910000
     }
   ],
+  "cart_items": [
+    {
+      "id": 1,
+      "title": "Lite SmartWatch",
+      "description": "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate",
+      "image": "https://dkstatics-public.digikala.com/digikala-products/d19ad9fb8742e3f0e4a0c19e11864378b82afbfb_1656931593.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/quality,q_90",
+      "price": 1173000,
+      "value": 4
+    },
+    {
+      "id": 2,
+      "title": "Mobro SmartWatch T1",
+      "description": "the visual form of a document or a typeface without relying on meaningful content.",
+      "image": "https://dkstatics-public.digikala.com/digikala-products/5b8c3c82ad9ddb31dd3c898d69b96a36259b0d6d_1671019556.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/quality,q_90",
+      "price": 1590000,
+      "value": 2
+    },
+    {
+      "id": 3,
+      "title": "Mobro SmartWatch C2 Global",
+      "description": "In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate",
+      "image": "https://dkstatics-public.digikala.com/digikala-products/55c512f9e1a70a0afbdb4533913e6c1f4dc6bd58_1661582400.jpg?x-oss-process=image/resize,m_lfit,h_800,w_800/quality,q_90",
+      "price": 1250000,
+      "value": 1
+    }
+  ],
   "tasks": [
     {
       "id": 4,
@@ -40,7 +66,7 @@
       "userId": 1,
       "id": 5,
       "title": "laboriosam mollitia et enim quasi adipisci quia provident illum",
-      "completed": false
+      "completed": true
     },
     {
       "userId": 1,
@@ -137,6 +163,12 @@
       "title": "sd sdfbsdf",
       "completed": false,
       "id": 21
+    },
+    {
+      "userId": 1,
+      "title": "سیاسب",
+      "completed": true,
+      "id": 22
     }
   ]
 }
