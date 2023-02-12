@@ -13,7 +13,7 @@
 
             <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
                <ul class="navbar-nav">
-                  <li class="nav-item"><router-link to="/" class="nav-link">Home</router-link></li>
+                  <li class="nav-item"><router-link :to="{ name: 'home' }" class="nav-link">Home</router-link></li>
                   <li class="nav-item"><router-link :to="{ name: 'tasks' }" class="nav-link">Tasks</router-link></li>
                   <li class="nav-item"><router-link :to="{ name: 'products' }" class="nav-link">Products</router-link>
                   </li>
@@ -21,13 +21,15 @@
             </div>
 
             <div class="position-relative">
-               <router-link :to="{name: 'cart'}">
+               <router-link :to="{ name: 'cart' }">
                   <b class="bi bi-cart text-white fs-4"></b>
                   <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger mt-2">
                      {{ cartCount }}
                   </span>
                </router-link>
             </div>
+            <b class="bi bi-box-arrow-right text-white fs-4 ms-4" title="Logout" style="cursor: pointer;"
+              @click="logout"></b>
 
          </div>
       </nav>
@@ -38,7 +40,9 @@
 <script setup>
 import { computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 const store = useStore();
 const cartCount = computed(() => store.getters['cart/cartCount']);
 
@@ -48,7 +52,15 @@ const fetchCartItems = () => {
 
 onMounted(() => {
    fetchCartItems();
-})
+});
+
+const logout = async () => {
+   if (window.confirm('Are you sure to logout?')) {
+      await store.dispatch('auth/logout');
+      router.push({ name: 'login' });
+   }
+}
+
 
 </script>
 
