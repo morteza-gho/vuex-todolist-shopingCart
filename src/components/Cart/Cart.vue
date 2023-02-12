@@ -25,23 +25,7 @@
           </td>
           <td class="text-center">{{ formatPrice(item.price) }}</td>
           <td class="text-center">
-            <div class="btn-group btn-group-sm">
-              <button type="button" class="btn btn-outline-danger" title="Increase" v-if="item.value > 1"
-                :disabled="miniLoading" @click="changeCount('dec', item)">
-                <i class="bi bi-dash-lg"></i>
-              </button>
-              <button type="button" class="btn btn-outline-danger" title="Increase" v-if="item.value === 1"
-                :disabled="miniLoading" @click="deleteItem(item.id)">
-                <i class="bi bi-trash"></i>
-              </button>
-              <button class="btn btn-outline-secondary text-black px-3" disabled>
-                {{ item.value }}
-              </button>
-              <button type="button" class="btn btn-outline-success" title="Decrease" :disabled="miniLoading"
-                @click="changeCount('inc', item)">
-                <i class="bi bi-plus-lg"></i>
-              </button>
-            </div>
+            <cart-actions :data="item"></cart-actions>
           </td>
           <td class="text-center">{{ formatPrice(item.value * item.price) }}</td>
         </tr>
@@ -71,31 +55,12 @@ import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
 import { formatPrice } from '../../functions';
 import Loading from '../Global/Loading.vue';
+import CartActions from './CartActions.vue';
 
 const store = useStore();
 const isLoading = ref(false);
-const miniLoading = ref(false);
 const cartItems = computed(() => store.getters['cart/allCartItems']);
 const totalPrice = computed(() => store.getters['cart/calcTotalPrice']);
-
-const changeCount = async (type, item) => {
-  if (type === 'inc') {
-    item.value++;
-  } else {
-    item.value--;
-  }
-  miniLoading.value = true;
-  await store.dispatch('cart/updateCartItem', item);
-  miniLoading.value = false;
-};
-
-const deleteItem = async (itemId) => {
-  if (window.confirm('Are You Sure To Delete This Product?')) {
-    miniLoading.value = true;
-    await store.dispatch('cart/deleteCartItem', itemId);
-    miniLoading.value = false;
-  }
-};
 
 </script>
 

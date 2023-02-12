@@ -16,6 +16,9 @@ const cart = {
     allCartItems(state) {
       return state.cartItems
     },
+    getCartItem: (state) => (itemId) => {
+      return state.cartItems.find(x => parseInt(x.id) === parseInt(itemId));
+    },
     cartCount(state) {
       return state.cartItems.length
     },

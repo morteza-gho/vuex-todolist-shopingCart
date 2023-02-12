@@ -14,7 +14,10 @@
           <p class="card-text fs-4 mb-5">{{ product.description }}</p>
 
           <div class="d-flex justify-content-between align-items-center">
-            <button class="btn btn-lg btn-outline-success" @click="addToCart(product)">Add To Cart</button>
+
+            <cart-actions :data="productInCart" size="lg" v-if="productInCart"></cart-actions>
+            <button class="btn btn-lg btn-outline-success" @click="addToCart(product)" v-else>Add To Cart</button>
+
             <strong class="text-black fs-4">
               <b class="bi bi-currency-dollar"></b>
               {{ formatPrice(product.price) }}
@@ -36,17 +39,19 @@
 
 import store from "../../store";
 import { useRoute } from "vue-router";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { formatPrice } from "../../functions";
 import { useToast } from "vue-toast-notification";
 import { BASE_URL } from "../../Constants";
 import axios from "axios";
 import Loading from "../Global/Loading.vue";
+import CartActions from '../Cart/CartActions.vue';
 
 const toast = useToast();
 const route = useRoute()
 const product = ref(null);
 const isLoading = ref(false);
+const productInCart = computed(() => store.getters[`cart/getCartItem`](route.params.id));
 
 const getProductData = async () => {
   try {
@@ -68,6 +73,8 @@ onMounted(() => {
 const addToCart = (item) => {
   store.dispatch('cart/addToCart', item);
 };
+
+
 
 
 </script>
