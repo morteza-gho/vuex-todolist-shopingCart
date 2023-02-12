@@ -1,7 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from '../Constants';
 import { useToast } from "vue-toast-notification";
-import { uuid } from './../functions';
 
 const toast = useToast();
 

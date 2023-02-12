@@ -1,8 +1,7 @@
 <template>
 
-  <loading v-if="isLoading"></loading>
+  <div v-if="cartItems.length">
 
-  <div v-else>
     <h1 class="mb-4">Shopping Cart Items</h1>
     <table class="table table-bordered table-hover">
       <thead>
@@ -44,21 +43,26 @@
         Checkout
       </button>
     </div>
+  </div>
 
+  <div class="d-flex flex-column justify-content-center align-items-center" v-else>
+    <div class="card text-center p-5">
+      <p class="fs-1">Your Cart Is Empty.</p>
+      <b class="bi bi-cart-x" style="font-size: 100px"></b>
+      <router-link :to="{ name: 'products' }" class="btn btn-dark mt-3">Go to products</router-link>
+    </div>
   </div>
 
 </template>
 
 <script setup>
 
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { formatPrice } from '../../functions';
-import Loading from '../Global/Loading.vue';
 import CartActions from './CartActions.vue';
 
 const store = useStore();
-const isLoading = ref(false);
 const cartItems = computed(() => store.getters['cart/allCartItems']);
 const totalPrice = computed(() => store.getters['cart/calcTotalPrice']);
 

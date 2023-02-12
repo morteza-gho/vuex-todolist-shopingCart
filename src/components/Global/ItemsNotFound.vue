@@ -4,12 +4,4 @@
    </div>
 </template>
 
-<script>
-   export default {
-      name: "ItemsNotFound"
-   }
-</script>
-
-<style scoped>
-
-</style>
+<script setup></script>
