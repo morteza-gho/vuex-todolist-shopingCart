@@ -20,9 +20,10 @@
 
 <script setup>
 import {ref, defineProps} from "vue";
-import { useStore } from 'vuex';
+import { useCartStore } from "../../store/cart";
 
-const store = useStore();
+
+const store = useCartStore();
 const miniLoading = ref(false);
 const props = defineProps({
   data: {
@@ -42,14 +43,14 @@ const changeCount = async (type) => {
     props.data.value--;
   }
   miniLoading.value = true;
-  await store.dispatch('cart/updateCartItem', props.data);
+  await store.updateCartItem(props.data);
   miniLoading.value = false;
 };
 
 const deleteItem = async () => {
   if (window.confirm('Are You Sure To Delete This Product?')) {
     miniLoading.value = true;
-    await store.dispatch('cart/deleteCartItem', props.data.id);
+    await store.deleteCartItem(props.data.id);
     miniLoading.value = false;
   }
 };

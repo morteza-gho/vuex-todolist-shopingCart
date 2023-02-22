@@ -8,16 +8,15 @@
 
       <form class="mb-3" @submit.prevent="submitForm">
         <div class="row g-3">
-          <div class="col-9 position-relative">
+          <div class="col-8 position-relative">
             <input type="text" class="form-control form-control-lg" placeholder="Enter task title..." v-model="newTask" ref="newTaskRef">
             <span class="bi bi-x cancel-edit" v-if="editingTask" @click="cancelEdit"></span>
           </div>
-          <div class="col-3">
+          <div class="col-4">
             <button type="submit" class="btn btn-lg btn-dark w-100 d-flex justify-content-around align-items-center" :disabled="miniLoading">
               <span class="spinner-grow spinner-grow-sm" v-if="miniLoading"></span>
-              <i class="bi bi-check-lg" v-else></i>
-              <span v-if="editingTask">Edit Task</span>
-              <span v-else>Add Task</span>
+              <span v-if="editingTask"><i class="bi bi-check-lg"></i> Edit Task</span>
+              <span v-else><i class="bi bi-plus-lg"></i> Add Task</span>
             </button>
           </div>
           <small class="mt-1 text-danger" v-if="hasError">Task title is required.</small>
@@ -33,12 +32,12 @@
 </template>
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { useStore } from 'vuex';
+import {useTasksStore} from "../../store/tasks";
 import Loading from '../Global/Loading.vue';
 import TaskItem from "./TaskItem.vue"
 
-const store = useStore();
-const tasks = computed(() => store.getters['tasks/allTasks']);
+const store = useTasksStore();
+const tasks = computed(() => store.allTasks);
 const isLoading = ref(false);
 const miniLoading = ref(false);
 const hasError = ref(false);
@@ -48,7 +47,7 @@ const newTaskRef = ref(null);
 
 const fetchTasks = async () => {
   isLoading.value = true;
-  await store.dispatch('tasks/fetchTasks');
+  await store.fetchTasks();
   isLoading.value = false;
 };
 
@@ -71,7 +70,7 @@ const submitForm = async () => {
 
     if (editingTask.value) {
       // edit mode
-      await store.dispatch('tasks/updateTask', {
+      await store.updateTask({
         id: editingTask.value.id,
         userId: 1,
         title: newTask.value,
@@ -80,7 +79,7 @@ const submitForm = async () => {
       editingTask.value = null;
     } else {
       // add mode
-      await store.dispatch('tasks/addTask', {
+      await store.addTask({
         userId: 1,
         title: newTask.value,
         completed: false

@@ -1,22 +1,24 @@
 import axios from "axios";
 import { BASE_URL } from '../Constants';
 import { useToast } from "vue-toast-notification";
+import { defineStore } from 'pinia';
 
 const toast = useToast();
 
-const cart = {
-  namespaced: true,
+export const useCartStore = defineStore('cart', {
 
-  state: {
-    cartItems: []
+  state: () => {
+    return {
+      cartItems: []
+    }
   },
 
   getters: {
     allCartItems(state) {
       return state.cartItems
     },
-    getCartItem: (state) => (itemId) => {
-      return state.cartItems.find(x => parseInt(x.id) === parseInt(itemId));
+    getCartItem: (state) => {
+      return (itemId) => state.cartItems.find(x => parseInt(x.id) === parseInt(itemId));
     },
     cartCount(state) {
       return state.cartItems.length
@@ -30,49 +32,28 @@ const cart = {
     }
   },
 
-  mutations: {
-
-    setToCart(state, items) {
-      state.cartItems = items;
-    },
-
-    updateCartItem(state, item) {
-      const index = state.cartItems.findIndex(x => x.id === item.id);
-      state.cartItems[index] = item;
-    },
-
-    addToCart(state, mewItem) {
-      state.cartItems.unshift(mewItem);
-    },
-
-    deleteCartItem(state, itemId) {
-      const index = state.cartItems.findIndex(x => x.id === itemId);
-      state.cartItems.splice(index, 1);
-    },
-
-  },
-
   actions: {
 
-    async fetchCartItems({ commit }) {
+    async fetchCartItems() {
       try {
         const { status, data } = await axios.get(`${BASE_URL}/cart_items`);
         if (status === 200) {
-          commit('setToCart', data);
+          this.cartItems = data;
         }
       } catch (err) {
         toast.error(err.message);
       }
     }, // fetchCartItems
 
-    async addToCart({ state, commit, dispatch }, dataModel) {
+    async addToCart(dataModel) {
 
-      const currentItem = state.cartItems.find(x => x.id === dataModel.id);
+      const currentItem = this.cartItems.find(x => x.id === dataModel.id);
 
       if (currentItem) {
 
         dataModel.value = currentItem.value + 1;
-        await dispatch('updateCartItem', dataModel); // increase cart item value
+        const index = this.cartItems.findIndex(x => x.id === currentItem.id);
+        this.cartItems[index] = currentItem;
 
       } else {
 
@@ -80,7 +61,7 @@ const cart = {
         try {
           const { status, data } = await axios.post(`${BASE_URL}/cart_items`, dataModel);
           if (status === 201) {
-            commit('addToCart', data);
+            this.cartItems.unshift(dataModel);
             toast.success('Product Added To Cart');
           }
         } catch (err) {
@@ -91,11 +72,12 @@ const cart = {
 
     }, // addToCart
 
-    async updateCartItem({ commit }, dataModel) {
+    async updateCartItem(dataModel) {
       try {
         const { status, data } = await axios.put(`${BASE_URL}/cart_items/${dataModel.id}`, dataModel);
         if (status === 200) {
-          commit('updateCartItem', data);
+          const index = this.cartItems.findIndex(x => x.id === dataModel.id);
+          this.cartItems[index] = dataModel;
           toast.success('Cart Item Updated');
         }
       } catch (err) {
@@ -103,11 +85,12 @@ const cart = {
       }
     }, // updateCartItem
 
-    async deleteCartItem({ commit }, itemId) {
+    async deleteCartItem(itemId) {
       try {
         const { status, data } = await axios.delete(`${BASE_URL}/cart_items/${itemId}`);
         if (status === 200) {
-          commit('deleteCartItem', itemId)
+          const index = this.cartItems.findIndex(x => x.id === itemId);
+          this.cartItems.splice(index, 1);
         }
       } catch (err) {
         toast.error(err.message);
@@ -116,6 +99,4 @@ const cart = {
 
   }
 
-}
-
-export default cart;
+});

@@ -1,5 +1,4 @@
 <template>
-
   <div class="d-flex flex-column align-items-center justify-content-center" style="height: 100vh;">
     <div class="card p-5">
       <div class="card-body text-center">
@@ -10,18 +9,17 @@
       </div>
     </div>
   </div>
-
 </template>
 
 <script setup>
 import { useRouter } from 'vue-router';
-import { useStore } from 'vuex';
+import { useAuthStore } from '../../store/auth';
 
-const store = useStore();
+const store = useAuthStore();
 const router = useRouter();
 
 const login = async () => {
-  await store.dispatch('auth/setToken', 'testToken');
+  await store.setToken('testToken');
   router.push({ name: 'home' });
 };
 

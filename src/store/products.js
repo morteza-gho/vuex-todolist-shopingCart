@@ -1,37 +1,31 @@
 import axios from "axios";
 import { BASE_URL } from '../Constants';
 import { useToast } from "vue-toast-notification";
+import { defineStore } from 'pinia';
 
 const toast = useToast();
 
-const products = {
-  namespaced: true,
+export const useProductsStore = defineStore('products', {
 
-  state: {
-    products: []
+  state: () => {
+    return {
+      products: []
+    }
   },
 
   getters: {
     allProducts(state) {
       return state.products
     },
-    
-  },
-
-  mutations: {
-
-    setProducts(state, products) {
-      state.products = products;
-    },
   },
 
   actions: {
 
-    async fetchProducts({ commit }) {
+    async fetchProducts() {
       try {
         const { status, data } = await axios.get(`${BASE_URL}/products`);
         if (status === 200) {
-          commit('setProducts', data);
+          this.products = data;
         }
       } catch (err) {
         toast.error(err.message);
@@ -40,6 +34,4 @@ const products = {
 
   }
 
-}
-
-export default products;
+});

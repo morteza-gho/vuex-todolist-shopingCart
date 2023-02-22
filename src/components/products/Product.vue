@@ -37,7 +37,6 @@
 
 <script setup>
 
-import store from "../../store";
 import { useRoute } from "vue-router";
 import { ref, onMounted, computed } from "vue";
 import { formatPrice } from "../../functions";
@@ -46,12 +45,14 @@ import { BASE_URL } from "../../Constants";
 import axios from "axios";
 import Loading from "../Global/Loading.vue";
 import CartActions from '../Cart/CartActions.vue';
+import { useCartStore } from "../../store/cart";
 
+const store = useCartStore();
 const toast = useToast();
 const route = useRoute()
 const product = ref(null);
 const isLoading = ref(false);
-const productInCart = computed(() => store.getters[`cart/getCartItem`](route.params.id));
+const productInCart = computed(() => store.getCartItem(route.params.id));
 
 const getProductData = async () => {
   try {
@@ -71,7 +72,7 @@ onMounted(() => {
 })
 
 const addToCart = (item) => {
-  store.dispatch('cart/addToCart', item);
+  store.addToCart(item);
 };
 
 

@@ -58,13 +58,14 @@
 <script setup>
 
 import { computed } from 'vue';
-import { useStore } from 'vuex';
+
 import { formatPrice } from '../../functions';
+import { useCartStore } from '../../store/cart';
 import CartActions from './CartActions.vue';
 
-const store = useStore();
-const cartItems = computed(() => store.getters['cart/allCartItems']);
-const totalPrice = computed(() => store.getters['cart/calcTotalPrice']);
+const store = useCartStore();
+const cartItems = computed(() => store.allCartItems);
+const totalPrice = computed(() => store.calcTotalPrice);
 
 </script>
 

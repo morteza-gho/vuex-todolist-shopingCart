@@ -39,15 +39,17 @@
 
 <script setup>
 import { computed, onMounted } from 'vue';
-import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+import { useAuthStore } from '../../store/auth';
+import {useCartStore} from "../../store/cart"
 
 const router = useRouter();
-const store = useStore();
-const cartCount = computed(() => store.getters['cart/cartCount']);
+const cartStore = useCartStore();
+const authStore = useAuthStore();
+const cartCount = computed(() => cartStore.cartCount);
 
 const fetchCartItems = () => {
-   store.dispatch('cart/fetchCartItems');
+   cartStore.fetchCartItems();
 };
 
 onMounted(() => {
@@ -56,7 +58,7 @@ onMounted(() => {
 
 const logout = async () => {
    if (window.confirm('Are you sure to logout?')) {
-      await store.dispatch('auth/logout');
+      await authStore.logout();
       router.push({ name: 'login' });
    }
 }

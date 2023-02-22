@@ -14,17 +14,17 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { useStore } from 'vuex';
+import { useProductsStore } from '../../store/products';
 import Loading from '../Global/Loading.vue';
 import ProductItem from '../products/ProductItem.vue';
 
-const store = useStore();
+const store = useProductsStore();
 const isLoading = ref(false);
-const products = computed(() => store.getters['products/allProducts']);
+const products = computed(() => store.allProducts);
 
 const fetchProducts = async () => {
   isLoading.value = true;
-  await store.dispatch('products/fetchProducts');
+  await store.fetchProducts();
   isLoading.value = false;
 };
 

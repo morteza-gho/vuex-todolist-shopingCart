@@ -1,8 +1,11 @@
-const auth = {
-  namespaced: true,
+import { defineStore } from "pinia";
 
-  state: {
-    token: null
+export const useAuthStore = defineStore('auth', {
+
+  state: () => {
+    return { 
+      token: null
+    }
   },
 
   getters: {
@@ -13,25 +16,15 @@ const auth = {
       return localStorage.getItem('token');
     }
   },
-  mutations: {
-    setToken(state, token) {
-      state.token = token;
-      localStorage.setItem('token', token);
-    },
-    logout(state) {
-      state.token = null;
-      localStorage.removeItem('token');
-    }
-  },
 
   actions: {
-    async setToken({ commit }, token) {
-      await commit('setToken', token);
+    async setToken(token) {
+      this.token = token;
+      localStorage.setItem('token', token);
     },
-    async logout({ commit }) {
-      await commit('logout');
+    async logout() {
+      this.token = null;
+      localStorage.removeItem('token');
     }
   }
-};
-
-export default auth;
+});

@@ -26,9 +26,9 @@
 
 <script setup>
 import {defineProps, defineEmits} from "vue"
-import { useStore } from "vuex";
+import {useTasksStore} from "../../store/tasks";
 
-const store = useStore();
+const store = useTasksStore();
 
 const props = defineProps({
   task: Object
@@ -41,13 +41,13 @@ const editTask = (task) => {
 
 const deleteTask = async (id) => {
   if (window.confirm('Are you sure to delete this task')) {
-    await store.dispatch('tasks/deleteTask', id);
+    await store.deleteTask(id);
   }
 }
 
 const changeTaskStatus = async (task) => {
   task.completed = !task.completed;
-  await store.dispatch('tasks/updateTask', task);
+  await store.updateTask(task);
 };
 
 </script>

@@ -26,16 +26,17 @@
 
 import { defineProps, computed } from "vue";
 import { formatPrice } from "../../functions";
-import store from "../../store";
+import { useCartStore } from "../../store/cart";
 import CartActions from '../Cart/CartActions.vue';
 
+const store = useCartStore();
 const props = defineProps({
   product: Object
 });
-const productInCart = computed(() => store.getters[`cart/getCartItem`](props.product.id));
+const productInCart = computed(() => store.getCartItem(props.product.id));
 
 const addToCart = (item) => {
-  store.dispatch('cart/addToCart', item);
+  store.addToCart(item);
 };
 
 </script>
