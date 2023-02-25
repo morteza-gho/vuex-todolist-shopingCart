@@ -1,4 +1,4 @@
-# Use vuex to manage TodoList and ShopingCart
+# Use vuex(pinia) to manage TodoList and ShopingCart
 
 This template should help get you started developing with Vue 3 in Vite.
 
